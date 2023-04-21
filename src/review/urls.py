@@ -1,10 +1,11 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
 from django.views.generic import RedirectView
 
 urlpatterns = [
     path('', RedirectView.as_view(url='/review/login/'), name='root'),
-    path('login/', views.login, name='login'),
+    path('login/', include("django.contrib.auth.urls"), name='login'),
+    path('login/', RedirectView.as_view(url='/review/login/login/'), name='root'),
     path('signup/', views.signup, name='signup'),
     path('home/', views.home, name='home'),
     path('follow/', views.follow, name='follow'),
