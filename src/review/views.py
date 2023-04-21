@@ -27,12 +27,11 @@ def home(request):
     tickets = u.get_viewable_tickets()
     reviews = u.get_viewable_reviews()
     posts = sorted(
-        chain(reviews, tickets), 
-        key=lambda post: post.time_created, 
+        chain(reviews, tickets),
+        key=lambda post: post.time_created,
         reverse=True
     )
     return render(request, 'home.html', context={'posts': posts})
-
 
 
 # 4. Follow view
