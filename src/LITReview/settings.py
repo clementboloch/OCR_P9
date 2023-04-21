@@ -125,3 +125,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = "/review/home/"
 LOGOUT_REDIRECT_URL = "/review/login/"
+AUTH_USER_MODEL = "review.User"
