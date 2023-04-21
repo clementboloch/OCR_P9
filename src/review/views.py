@@ -1,8 +1,11 @@
-# from django.shortcuts import render
+from itertools import chain
+
+from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 from django.views import generic
+from . import models
 
 
 # 1. Login view
@@ -19,7 +22,17 @@ class SignUp(generic.CreateView):
 
 # 3. Home view
 def home(request):
-    return HttpResponse("Home")
+    u = request.user
+    u = models.CustomUser.objects.get(username='smithkaren')
+    tickets = u.get_viewable_tickets()
+    reviews = u.get_viewable_reviews()
+    posts = sorted(
+        chain(reviews, tickets), 
+        key=lambda post: post.time_created, 
+        reverse=True
+    )
+    return render(request, 'home.html', context={'posts': posts})
+
 
 
 # 4. Follow view

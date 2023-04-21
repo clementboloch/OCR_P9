@@ -2,22 +2,22 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from django.db.models import Q
+from django.db.models import Q, CharField, Value
 
 
 class CustomUser(AbstractUser):
     def get_followed_users(self):
         return CustomUser.objects.filter(followed_by__user=self)
 
-    def get_vieawable_tickets(self):
+    def get_viewable_tickets(self):
         return Ticket.objects.filter(
             Q(user=self) | Q(user__in=self.get_followed_users())
-        )
+        ).annotate(content_type=Value('TICKET', CharField()))
 
     def get_viewable_reviews(self):
         return Review.objects.filter(
             Q(user=self) | Q(user__in=self.get_followed_users()) | Q(ticket__user=self)
-        )
+        ).annotate(content_type=Value('REVIEW', CharField()))
 
 
 class Ticket(models.Model):

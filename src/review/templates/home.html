@@ -1,0 +1,7 @@
+{% for post in posts %}
+    {% if post.content_type == 'TICKET' %}
+        {{post}}
+        {% elif post.content_type == 'REVIEW' %}
+        {{post}}
+    {% endif %}
+{% endfor %}
