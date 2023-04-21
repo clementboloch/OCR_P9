@@ -2,15 +2,18 @@ from itertools import chain
 
 from django.shortcuts import render
 from django.http import HttpResponse
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.views import LoginView
 from django.urls import reverse_lazy
 from django.views import generic
 from . import models
 
 
 # 1. Login view
-def login(request):
-    return HttpResponse("Login")
+class Login(LoginView):
+    form_class = AuthenticationForm
+    success_url = reverse_lazy("home")
+    template_name = "registration/login.html"
 
 
 # 2. Signup view

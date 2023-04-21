@@ -4,8 +4,7 @@ from django.views.generic import RedirectView
 
 urlpatterns = [
     path('', RedirectView.as_view(url='/review/login/'), name='root'),
-    path('login/', include("django.contrib.auth.urls"), name='login'),
-    path('login/', RedirectView.as_view(url='/review/login/login/'), name='root'),
+    path('login/', views.Login.as_view(), name='login'),
     path('signup/', views.SignUp.as_view(), name='signup'),
     path('home/', views.home, name='home'),
     path('follow/', views.follow, name='follow'),
