@@ -1,5 +1,8 @@
 # from django.shortcuts import render
 from django.http import HttpResponse
+from django.contrib.auth.forms import UserCreationForm
+from django.urls import reverse_lazy
+from django.views import generic
 
 
 # 1. Login view
@@ -8,8 +11,10 @@ def login(request):
 
 
 # 2. Signup view
-def signup(request):
-    return HttpResponse("Signup")
+class SignUp(generic.CreateView):
+    form_class = UserCreationForm
+    success_url = reverse_lazy("login")
+    template_name = "registration/signup.html"
 
 
 # 3. Home view

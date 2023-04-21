@@ -6,7 +6,7 @@ urlpatterns = [
     path('', RedirectView.as_view(url='/review/login/'), name='root'),
     path('login/', include("django.contrib.auth.urls"), name='login'),
     path('login/', RedirectView.as_view(url='/review/login/login/'), name='root'),
-    path('signup/', views.signup, name='signup'),
+    path('signup/', views.SignUp.as_view(), name='signup'),
     path('home/', views.home, name='home'),
     path('follow/', views.follow, name='follow'),
     path('ticket/', views.ticket, name='ticket'),
