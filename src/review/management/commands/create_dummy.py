@@ -1,6 +1,5 @@
-from django.contrib.auth.models import User
 from django.core.management.base import BaseCommand
-from review.models import Ticket, Review, UserFollow
+from review.models import CustomUser, Ticket, Review, UserFollow
 from faker import Faker
 
 
@@ -16,14 +15,14 @@ class Command(BaseCommand):
             password = fake.password()
 
             # create user if doesn't exist
-            if not User.objects.filter(username=username).exists():
-                User.objects.create_user(username=username, password=password)
+            if not CustomUser.objects.filter(username=username).exists():
+                CustomUser.objects.create(username=username, password=password)
 
         # create fake tickets
         for i in range(10):
             title = fake.sentence(nb_words=6, variable_nb_words=True)
             description = fake.text(max_nb_chars=2048)
-            user = User.objects.order_by('?').first()
+            user = CustomUser.objects.order_by('?').first()
 
             Ticket.objects.create(title=title, description=description, user=user)
 
@@ -36,17 +35,17 @@ class Command(BaseCommand):
             rating = fake.random_int(min=0, max=5)
             headline = fake.sentence(nb_words=3, variable_nb_words=True)
             body = fake.text(max_nb_chars=8192)
-            user = User.objects.order_by('?').first()
+            user = CustomUser.objects.order_by('?').first()
 
             Review.objects.create(ticket=ticket, rating=rating, headline=headline, body=body, user=user)
 
         # create fake follows
         for i in range(10):
-            user = User.objects.order_by('?').first()
-            followed_user = User.objects.order_by('?').first()
+            user = CustomUser.objects.order_by('?').first()
+            followed_user = CustomUser.objects.order_by('?').first()
             same = user == followed_user
             while same:
-                followed_user = User.objects.order_by('?').first()
+                followed_user = CustomUser.objects.order_by('?').first()
                 same = user == followed_user
 
             # create user follow if doesn't exist
