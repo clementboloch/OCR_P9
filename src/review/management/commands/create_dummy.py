@@ -13,12 +13,11 @@ class Command(BaseCommand):
         # create fake user
         for i in range(10):
             username = fake.user_name()
-            email = fake.email()
             password = fake.password()
 
             # create user if doesn't exist
             if not User.objects.filter(username=username).exists():
-                User.objects.create_user(username=username, email=email, password=password)
+                User.objects.create_user(username=username, password=password)
 
         # create fake tickets
         for i in range(10):
