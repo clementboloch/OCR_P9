@@ -39,7 +39,12 @@ def home(request):
 
 # 4. Follow view
 def follow(request):
-    return HttpResponse("Follow")
+    u = request.user
+    u = models.CustomUser.objects.get(username='smithkaren')
+    followed = list(u.get_followed_users().values())
+    following = list(u.get_following_users().values())
+    follow = {'followed': followed, 'following': following}
+    return render(request, 'follow.html', context=follow)
 
 
 # 5. Ticket creation view

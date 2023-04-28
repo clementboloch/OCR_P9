@@ -9,6 +9,9 @@ class CustomUser(AbstractUser):
     def get_followed_users(self):
         return CustomUser.objects.filter(followed_by__user=self)
 
+    def get_following_users(self):
+        return CustomUser.objects.filter(following__followed_user=self)
+
     def get_viewable_tickets(self):
         return Ticket.objects.filter(
             Q(user=self) | Q(user__in=self.get_followed_users())

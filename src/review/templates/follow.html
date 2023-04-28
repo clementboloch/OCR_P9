@@ -1,0 +1,13 @@
+FOLLOWED
+{% for user in followed %}
+    <p>
+        {{user.username}}
+    </p>
+{% endfor %}
+
+FOLLOWING
+{% for user in following %}
+    <p>
+        {{user.username}}
+    </p>
+{% endfor %}
