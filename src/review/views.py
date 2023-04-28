@@ -59,4 +59,13 @@ def review(request):
 
 # 7. My posts view
 def posts(request):
-    return HttpResponse("My posts")
+    u = request.user
+    u = models.CustomUser.objects.get(username='smithkaren')
+    tickets = u.get_viewable_tickets().filter(user=u)
+    reviews = u.get_viewable_reviews().filter(user=u)
+    posts = sorted(
+        chain(reviews, tickets),
+        key=lambda post: post.time_created,
+        reverse=True
+    )
+    return render(request, 'posts.html', context={'posts': posts})
