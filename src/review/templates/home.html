@@ -1,7 +1,6 @@
 {% for post in posts %}
     {% if post.content_type == 'TICKET' %}
-        {{post}}
-        {% elif post.content_type == 'REVIEW' %}
-        {{post}}
-    {% endif %}
+        {% include 'ticket_snippet.html' %}
+    {% elif post.content_type == 'REVIEW' %}
+        {% include 'review_snippet.html' %}
 {% endfor %}
