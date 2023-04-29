@@ -1,12 +1,12 @@
 from itertools import chain
 
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.views import LoginView
 from django.urls import reverse_lazy
 from django.views import generic
 from . import models
+from . import forms
 
 
 # 1. Login view
@@ -49,12 +49,38 @@ def follow(request):
 
 # 5. Ticket creation view
 def ticket(request):
-    return HttpResponse("Ticket creation")
+    if request.method == "POST":
+        form = forms.TicketForm(request.POST, request.FILES or None)
+        if form.is_valid():
+            my_ticket = form.save(commit=False)
+            # u = request.user
+            u = models.CustomUser.objects.get(username='smithkaren')
+            my_ticket.user = u
+            my_ticket.save()
+            return redirect('home')
+
+    else:
+        form = forms.TicketForm()
+
+    return render(request, "ticket.html", {"form": form})
 
 
 # 6. Review creation view
 def review(request):
-    return HttpResponse("Review creation")
+    if request.method == "POST":
+        form = forms.ReviewForm(request.POST)
+        if form.is_valid():
+            my_review = form.save(commit=False)
+            # u = request.user
+            u = models.CustomUser.objects.get(username='smithkaren')
+            my_review.user = u
+            my_review.save()
+            return redirect('home')
+
+    else:
+        form = forms.ReviewForm()
+
+    return render(request, "review.html", {"form": form})
 
 
 # 7. My posts view
