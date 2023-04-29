@@ -87,8 +87,8 @@ def review(request):
 def posts(request):
     u = request.user
     u = models.CustomUser.objects.get(username='smithkaren')
-    tickets = u.get_viewable_tickets().filter(user=u)
-    reviews = u.get_viewable_reviews().filter(user=u)
+    tickets = u.get_my_tickets()
+    reviews = u.get_my_reviews()
     posts = sorted(
         chain(reviews, tickets),
         key=lambda post: post.time_created,

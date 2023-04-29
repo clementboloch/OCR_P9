@@ -17,10 +17,16 @@ class CustomUser(AbstractUser):
             Q(user=self) | Q(user__in=self.get_followed_users())
         ).annotate(content_type=Value('TICKET', CharField()))
 
+    def get_my_tickets(self):
+        return Ticket.objects.filter(user=self).annotate(content_type=Value('TICKET', CharField()))
+
     def get_viewable_reviews(self):
         return Review.objects.filter(
             Q(user=self) | Q(user__in=self.get_followed_users()) | Q(ticket__user=self)
         ).annotate(content_type=Value('REVIEW', CharField()))
+
+    def get_my_reviews(self):
+        return Review.objects.filter(user=self).annotate(content_type=Value('REVIEW', CharField()))
 
 
 class Ticket(models.Model):
