@@ -13,14 +13,14 @@ from . import forms
 class Login(LoginView):
     form_class = AuthenticationForm
     success_url = reverse_lazy("home")
-    template_name = "registration/login.html"
+    template_name = "review/registration/login.html"
 
 
 # 2. Signup view
 class SignUp(generic.CreateView):
     form_class = UserCreationForm
     success_url = reverse_lazy("login")
-    template_name = "registration/signup.html"
+    template_name = "review/registration/signup.html"
 
 
 # 3. Home view
@@ -34,7 +34,7 @@ def home(request):
         key=lambda post: post.time_created,
         reverse=True
     )
-    return render(request, 'home.html', context={'posts': posts})
+    return render(request, 'review/home.html', context={'posts': posts})
 
 
 # 4. Follow view
@@ -44,7 +44,7 @@ def follow(request):
     followed = list(u.get_followed_users().values())
     following = list(u.get_following_users().values())
     follow = {'followed': followed, 'following': following}
-    return render(request, 'follow.html', context=follow)
+    return render(request, 'review/follow.html', context=follow)
 
 
 # 5. Ticket creation view
@@ -62,7 +62,7 @@ def ticket(request):
     else:
         form = forms.TicketForm()
 
-    return render(request, "ticket.html", {"form": form})
+    return render(request, "review/ticket.html", {"form": form})
 
 
 # 6. Review creation view
@@ -80,7 +80,7 @@ def review(request):
     else:
         form = forms.ReviewForm()
 
-    return render(request, "review.html", {"form": form})
+    return render(request, "review/review.html", {"form": form})
 
 
 # 7. My posts view
@@ -94,4 +94,4 @@ def posts(request):
         key=lambda post: post.time_created,
         reverse=True
     )
-    return render(request, 'posts.html', context={'posts': posts})
+    return render(request, 'review/posts.html', context={'posts': posts})
