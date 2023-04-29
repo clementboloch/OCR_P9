@@ -1,3 +1,6 @@
+{% extends 'review/base.html' %}
+{% block content %}
+
 FOLLOWED
 {% for user in followed %}
     <p>
@@ -11,3 +14,5 @@ FOLLOWING
         {{user.username}}
     </p>
 {% endfor %}
+
+{% endblock %}

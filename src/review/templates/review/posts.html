@@ -1,3 +1,6 @@
+{% extends 'review/base.html' %}
+{% block content %}
+
 {% for post in posts %}
     {% if post.content_type == 'TICKET' %}
         {% include 'review/ticket_snippet.html' %}
@@ -5,3 +8,5 @@
         {% include 'review/review_snippet.html' %}
     {% endif %}
 {% endfor %}
+
+{% endblock %}
