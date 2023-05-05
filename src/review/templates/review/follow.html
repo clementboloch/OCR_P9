@@ -1,14 +1,22 @@
 {% extends 'review/base.html' %}
 {% block content %}
 
-FOLLOWED
+<h2>FOLLOW SOMEONE ELSE</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Post</button>
+</form>
+{{ error_message }}
+
+<h2>FOLLOWED</h2>
 {% for user in followed %}
     <p>
         {{user.username}}
     </p>
 {% endfor %}
 
-FOLLOWING
+<h2>FOLLOWING</h2>
 {% for user in following %}
     <p>
         {{user.username}}

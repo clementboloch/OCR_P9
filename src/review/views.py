@@ -5,6 +5,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.views import LoginView
 from django.urls import reverse_lazy
 from django.views import generic
+from django.db import IntegrityError
 from . import models
 from . import forms
 
@@ -41,9 +42,27 @@ def home(request):
 def follow(request):
     u = request.user
     u = models.CustomUser.objects.get(username='smithkaren')
+    error_message = ""
+    if request.method == "POST":
+        form = forms.FollowForm(request.POST)
+        if form.is_valid():
+            my_follow = form.cleaned_data['user']
+            try:
+                my_follow = models.CustomUser.objects.get(username=my_follow)
+            except models.CustomUser.DoesNotExist:
+                my_follow = None
+            if my_follow is not None:
+                new_follow = models.UserFollow(user=u, followed_user=my_follow)
+                try:
+                    new_follow.save()
+                except IntegrityError:
+                    error_message = "You are already following this user"
+            else:
+                error_message = "User does not exist"
+    form = forms.FollowForm()
     followed = list(u.get_followed_users().values())
     following = list(u.get_following_users().values())
-    follow = {'followed': followed, 'following': following}
+    follow = {'error_message': error_message, 'form': form, 'followed': followed, 'following': following}
     return render(request, 'review/follow.html', context=follow)
 
 

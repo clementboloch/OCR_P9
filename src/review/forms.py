@@ -13,3 +13,7 @@ class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review
         fields = ['headline', 'rating', 'body']
+
+
+class FollowForm(forms.Form):
+    user = forms.CharField(label='User', max_length=100)
