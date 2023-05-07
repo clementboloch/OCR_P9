@@ -93,21 +93,39 @@ def ticket(request):
 
 
 # 6. Review creation view
-def review(request):
+def review(request, ticket_id):
     if request.method == "POST":
-        form = forms.ReviewForm(request.POST)
-        if form.is_valid():
-            my_review = form.save(commit=False)
+        ticketForm = {}
+        reviewForm = {}
+        for key, value in request.POST.items():
+            if key in ['title', 'description', 'image']:
+                ticketForm[key] = value
+            elif key in ['headline', 'rating', 'body']:
+                reviewForm[key] = value
+        ticketForm = forms.TicketForm(ticketForm)
+        reviewForm = forms.ReviewForm(reviewForm)
+        if ticketForm.is_valid() and reviewForm.is_valid():
+            my_ticket = ticketForm.save(commit=False)
             # u = request.user
             u = models.CustomUser.objects.get(username='smithkaren')
+            my_ticket.user = u
+            my_ticket.save()
+            my_review = reviewForm.save(commit=False)
+            my_review.ticket = my_ticket
             my_review.user = u
             my_review.save()
-            return redirect('home')
+        return redirect('home')
 
     else:
-        form = forms.ReviewForm()
-
-    return render(request, "review/review.html", {"form": form})
+        if ticket_id != 0:
+            ticket = models.Ticket.objects.get(id=ticket_id)
+            ticketForm = None
+        else:
+            ticket = None
+            ticketForm = forms.TicketForm()
+        reviewForm = forms.ReviewForm()
+        return render(request, "review/review.html",
+                      {"ticket": ticket, "ticketForm": ticketForm, "reviewForm": reviewForm})
 
 
 # 7. My posts view

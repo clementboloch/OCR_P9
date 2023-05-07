@@ -4,7 +4,9 @@
 <h2>New review</h2>
 <form method="post">
   {% csrf_token %}
-  {{ form.as_p }}
+  {% include 'review/ticket_snippet.html' with post=ticket %}
+  {{ ticketForm.as_p }}
+  {{ reviewForm.as_p }}
   <button type="submit">Post</button>
 </form>
 
