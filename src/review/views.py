@@ -66,6 +66,14 @@ def follow(request):
     return render(request, 'review/follow.html', context=follow)
 
 
+def unfollow(request, unfollowed_user):
+    u = request.user
+    u = models.CustomUser.objects.get(username='smithkaren')
+    unfollowed_user = models.CustomUser.objects.get(id=unfollowed_user)
+    models.UserFollow.objects.filter(user=u, followed_user=unfollowed_user).delete()
+    return redirect('follow')
+
+
 # 5. Ticket creation view
 def ticket(request):
     if request.method == "POST":

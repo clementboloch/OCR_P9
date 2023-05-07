@@ -12,7 +12,8 @@
 <h2>FOLLOWED</h2>
 {% for user in followed %}
     <p>
-        {{user.username}}
+        {{user.username}} 
+        <a href="{% url 'unfollow' user.id %}">Unfollow</a>
     </p>
 {% endfor %}
 

@@ -11,4 +11,5 @@ urlpatterns = [
     path('ticket/', views.ticket, name='ticket'),
     path('review/', views.review, name='review'),
     path('posts/', views.posts, name='my_posts'),
+    path('unfollow/<int:unfollowed_user>/', views.unfollow, name='unfollow'),
 ]
