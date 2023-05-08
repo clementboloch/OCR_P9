@@ -2,4 +2,8 @@
     TICKET - {{ post }} 
     Title: {{ post.title }} 
     Description: {{ post.description }}
+    {% if editable == True %}
+        <a href="{% url 'edit_ticket' post.id %}">Edit</a>
+        <a href="{% url 'delete_ticket' post.id %}">Delete</a>
+    {% endif %}
 </p>

@@ -89,7 +89,7 @@ def ticket(request):
     else:
         form = forms.TicketForm()
 
-    return render(request, "review/ticket.html", {"form": form})
+    return render(request, "review/ticket.html", {"title": "Create a new ticket", "form": form})
 
 
 # 6. Review creation view
@@ -125,7 +125,58 @@ def review(request, ticket_id):
             ticketForm = forms.TicketForm()
         reviewForm = forms.ReviewForm()
         return render(request, "review/review.html",
-                      {"ticket": ticket, "ticketForm": ticketForm, "reviewForm": reviewForm})
+                      {"title": "Create a new review", "ticket": ticket,
+                       "ticketForm": ticketForm, "reviewForm": reviewForm})
+
+
+# Ticket modification view
+def edit_ticket(request, ticket_id):
+    ticket = models.Ticket.objects.get(id=ticket_id)
+    if request.method == "POST":
+        form = forms.TicketForm(request.POST, request.FILES or None, instance=ticket)
+        if form.is_valid():
+            my_ticket = form.save(commit=False)
+            # u = request.user
+            u = models.CustomUser.objects.get(username='smithkaren')
+            my_ticket.user = u
+            my_ticket.save()
+        return redirect(posts)
+    else:
+        form = forms.TicketForm(instance=ticket)
+        return render(request, "review/ticket.html", {"title": "Edit your ticket", "form": form})
+
+
+# Review modification view
+def edit_review(request, review_id):
+    review = models.Review.objects.get(id=review_id)
+    if request.method == "POST":
+        form = forms.ReviewForm(request.POST, instance=review)
+        if form.is_valid():
+            my_review = form.save(commit=False)
+            # u = request.user
+            u = models.CustomUser.objects.get(username='smithkaren')
+            my_review.user = u
+            my_review.save()
+        return redirect(posts)
+    else:
+        ticket = review.ticket
+        form = forms.ReviewForm(instance=review)
+        return render(request, "review/review.html",
+                      {"title": "Edit your review", "ticket": ticket, "reviewForm": form})
+
+
+# Ticket deletion view
+def delete_ticket(request, ticket_id):
+    ticket = models.Ticket.objects.get(id=ticket_id)
+    ticket.delete()
+    return redirect(posts)
+
+
+# Review deletion view
+def delete_review(request, review_id):
+    review = models.Review.objects.get(id=review_id)
+    review.delete()
+    return redirect(posts)
 
 
 # 7. My posts view
@@ -139,4 +190,4 @@ def posts(request):
         key=lambda post: post.time_created,
         reverse=True
     )
-    return render(request, 'review/posts.html', context={'posts': posts})
+    return render(request, 'review/posts.html', context={'posts': posts, 'editable': True})
