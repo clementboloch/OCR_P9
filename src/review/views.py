@@ -35,7 +35,7 @@ def home(request):
         key=lambda post: post.time_created,
         reverse=True
     )
-    return render(request, 'review/home.html', context={'posts': posts})
+    return render(request, 'review/home.html', context={'posts': posts, 'answerable': True})
 
 
 # 4. Follow view
@@ -94,6 +94,8 @@ def ticket(request):
 
 # 6. Review creation view
 def review(request, ticket_id):
+    # u = request.user
+    u = models.CustomUser.objects.get(username='smithkaren')
     if request.method == "POST":
         ticketForm = {}
         reviewForm = {}
@@ -102,14 +104,19 @@ def review(request, ticket_id):
                 ticketForm[key] = value
             elif key in ['headline', 'rating', 'body']:
                 reviewForm[key] = value
-        ticketForm = forms.TicketForm(ticketForm)
+        if ticketForm:
+            ticketForm = forms.TicketForm(ticketForm)
+            if ticketForm.is_valid():
+                my_ticket = ticketForm.save(commit=False)
+                my_ticket.user = u
+                my_ticket.save()
+            else:
+                # TODO: add an error message somewhere
+                return redirect('review', ticket_id)
+        else:
+            my_ticket = models.Ticket.objects.get(id=ticket_id)
         reviewForm = forms.ReviewForm(reviewForm)
-        if ticketForm.is_valid() and reviewForm.is_valid():
-            my_ticket = ticketForm.save(commit=False)
-            # u = request.user
-            u = models.CustomUser.objects.get(username='smithkaren')
-            my_ticket.user = u
-            my_ticket.save()
+        if reviewForm.is_valid():
             my_review = reviewForm.save(commit=False)
             my_review.ticket = my_ticket
             my_review.user = u

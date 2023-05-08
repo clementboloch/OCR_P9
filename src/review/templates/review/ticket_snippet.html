@@ -6,4 +6,7 @@
         <a href="{% url 'edit_ticket' post.id %}">Edit</a>
         <a href="{% url 'delete_ticket' post.id %}">Delete</a>
     {% endif %}
+    {%  if answerable == True %}
+        <a href="{% url 'review' post.id %}">Answer</a>
+    {% endif %}
 </p>
