@@ -7,7 +7,8 @@
         {{ post.user }} a publié une critique
     </p>
 
-    <h3> {{ post.headline }} </h3>
+    <h3> 
+        {{ post.headline }} - {{ post.rating }} / 5 </h3>
     <p class="description">
         {{ post.body }}
     </p>
@@ -19,10 +20,14 @@
     </p>
     {% endif %}
 
-{% if editable == True %}
+    {% if post.ticket %}
+    {% include 'review/ticket_snippet.html' with post=post.ticket answerable=False %}
+    {% endif %}
+
+    {% if editable == True %}
     <div class="post-button">
         <a class="btn btn-primary my-button" href="{% url 'edit_review' post.id %}"> Modifier </a>
         <a class="btn btn-danger my-button" href="{% url 'delete_review' post.id %}"> Supprimer </a>
     </div>
-{% endif %}
+    {% endif %}
 </div>
