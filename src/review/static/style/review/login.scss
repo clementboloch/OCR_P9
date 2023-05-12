@@ -1,0 +1,25 @@
+.content {
+    display: flex;
+    justify-content: center;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    .container {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 20px;
+        width: 400px;
+
+        margin :0 10px;
+        text-align: center;
+
+        h2 {
+            padding: 0 0 10px 0;
+            font-size: 25px;
+            color: #333;
+        }
+    }
+}
