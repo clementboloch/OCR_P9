@@ -1,9 +1,28 @@
-<p>
-    REVIEW - {{ post }} 
-    Title: {{ post.headline }} 
-    Description: {{ post.body }}
-    {% if editable == True %}
-        <a href="{% url 'edit_review' post.id %}">Edit</a>
-        <a href="{% url 'delete_review' post.id %}">Delete</a>
+<div class="post">
+    <p class="date">
+        {{ post.time_created|date:"h:m, l d M Y" }}
+    </p>
+
+    <p class="user">
+        {{ post.user }} a publié une critique
+    </p>
+
+    <h3> {{ post.headline }} </h3>
+    <p class="description">
+        {{ post.body }}
+    </p>
+
+    {% if post.image %}
+    <h3> Image </h3>
+    <p class="body">
+        {{ post.image }}
+    </p>
     {% endif %}
-</p>
+
+{% if editable == True %}
+    <div class="post-button">
+        <a class="btn btn-primary my-button" href="{% url 'edit_review' post.id %}"> Modifier </a>
+        <a class="btn btn-danger my-button" href="{% url 'delete_review' post.id %}"> Supprimer </a>
+    </div>
+{% endif %}
+</div>

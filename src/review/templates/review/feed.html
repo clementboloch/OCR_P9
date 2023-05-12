@@ -1,0 +1,23 @@
+{% extends 'review/base.html' %}
+{% block content %}
+
+{% load static %}
+{% load compress %}
+{% compress css %}
+<link type="text/x-scss" href="{% static 'style/review/feed.scss' %}" rel="stylesheet" media="screen">
+{% endcompress %}
+
+<div class="container">
+    {% block buttons %}
+    {% endblock %}
+    
+    {% for post in posts %}
+        {% if post.content_type == 'TICKET' %}
+            {% include 'review/ticket_snippet.html' %}
+        {% elif post.content_type == 'REVIEW' %}
+            {% include 'review/review_snippet.html' %}
+        {% endif %}
+    {% endfor %}
+</div>
+
+{% endblock %}

@@ -1,15 +1,7 @@
-{% extends 'review/base.html' %}
-{% block content %}
-
-<a href="/review/ticket">Demander une critique</a>
-<a href="/review/review">Créer une critique</a>
-
-{% for post in posts %}
-    {% if post.content_type == 'TICKET' %}
-        {% include 'review/ticket_snippet.html' %}
-    {% elif post.content_type == 'REVIEW' %}
-        {% include 'review/review_snippet.html' %}
-    {% endif %}
-{% endfor %}
-
+{% extends 'review/feed.html' %}
+{% block buttons %}
+<div class="buttons">
+    <a class="btn btn-primary my-button" href="/review/ticket">Demander une critique</a>
+    <a class="btn btn-primary my-button" href="/review/review">Créer une critique</a>
+</div>
 {% endblock %}
