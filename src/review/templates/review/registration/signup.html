@@ -1,3 +1,6 @@
+{% extends 'review/header.html' %}
+{% block content %}
+
 <h2>Sign up</h2>
   <form method="post">
     {% csrf_token %}
@@ -6,3 +9,5 @@
   </form>
 
 <a href="/review/login">Go to login page</a>
+
+{% endblock %}
