@@ -1,13 +1,19 @@
 {% extends 'review/base.html' %}
 {% block content %}
 
-<h2>Sign up</h2>
+{% load static %}
+{% load compress %}
+{% compress css %}
+<link type="text/x-scss" href="{% static 'style/review/signup.scss' %}" rel="stylesheet" media="screen">
+{% endcompress %}
+
+<h2>Inscrivez-vous</h2>
   <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Sign Up</button>
+    <button type="submit">S'inscrire</button>
   </form>
 
-<a href="/review/login">Go to login page</a>
+<a href="/review/login">Aller à page de login</a>
 
 {% endblock %}
