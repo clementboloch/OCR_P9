@@ -16,39 +16,4 @@
             margin: 0 10px;
         }
     }
-
-    .post {
-        position: relative;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        padding: 20px;
-        width: 100%;
-        margin-bottom: 20px;
-
-        .date {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-
-            font-size: 13px;
-        }
-
-        .user {
-            font-style: italic;
-        }
-
-        .description {
-            text-align: justify;
-        }
-
-        .post-button {
-            display: flex;
-            justify-content: flex-end;
-            .my-button {
-                display: block;
-                width: 100px;
-                margin: 0 0 0 10px;
-            }
-        }
-    }
 }

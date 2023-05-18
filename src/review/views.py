@@ -89,7 +89,7 @@ def ticket(request):
     else:
         form = forms.TicketForm()
 
-    return render(request, "review/ticket.html", {"title": "Create a new ticket", "form": form})
+    return render(request, "review/form.html", {"title": "Créer un ticket", "forms": [{'form': form}]})
 
 
 # 6. Review creation view
@@ -131,9 +131,12 @@ def review(request, ticket_id):
             ticket = None
             ticketForm = forms.TicketForm()
         reviewForm = forms.ReviewForm()
-        return render(request, "review/review.html",
-                      {"title": "Create a new review", "ticket": ticket,
-                       "ticketForm": ticketForm, "reviewForm": reviewForm})
+        return render(request, "review/form.html",
+                      {"title": "Créer une critique",
+                       "forms": [{'ticket': ticket, 'subtitle': 'Vous êtes en train de poster en réponse à'},
+                                 {'form': ticketForm, 'subtitle': 'Livre / Article'},
+                                 {'form': reviewForm, 'subtitle': 'Critique'}
+                                 ]})
 
 
 # Ticket modification view
@@ -150,7 +153,10 @@ def edit_ticket(request, ticket_id):
         return redirect(posts)
     else:
         form = forms.TicketForm(instance=ticket)
-        return render(request, "review/ticket.html", {"title": "Edit your ticket", "form": form})
+        return render(request, "review/form.html",
+                      {"title": "Modifier votre ticket",
+                       "forms": [{'form': form}]
+                       })
 
 
 # Review modification view
@@ -168,8 +174,11 @@ def edit_review(request, review_id):
     else:
         ticket = review.ticket
         form = forms.ReviewForm(instance=review)
-        return render(request, "review/review.html",
-                      {"title": "Edit your review", "ticket": ticket, "reviewForm": form})
+        return render(request, "review/form.html",
+                      {"title": "Modifier votre critique",
+                       "forms": [{'ticket': ticket, 'subtitle': 'Vous êtes en train de poster en réponse à'},
+                                 {'form': form, 'subtitle': 'Critique'}
+                                 ]})
 
 
 # Ticket deletion view

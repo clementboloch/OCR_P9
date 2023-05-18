@@ -1,0 +1,32 @@
+{% extends 'review/base.html' %}
+{% block content %}
+
+<div class="styled-form">
+  <h2 class="form-title"> {{ title }} </h2>
+  <form method="post">
+    {% csrf_token %}
+    {% for formDict in forms %}
+      {% if formDict.ticket %}
+      <h3> {{ formDict.subtitle }} </h3>
+        {% include 'review/ticket_snippet.html' with post=formDict.ticket %}
+        {% if not forloop.last %} <hr> {% endif %}
+      {% endif %}
+      {% if formDict.form %}
+        <h3> {{ formDict.subtitle }} </h3>
+        {% for field in formDict.form %}
+        <p>
+          <span class="label"> {{ field.label }} </span>
+          {{ field }}
+        </p>
+        {% endfor %}
+        {% if not forloop.last %} <hr> {% endif %}
+      {% endif %}
+    {% endfor %}
+    
+    <div class="button-container">
+      <button type="submit" class="btn btn-primary my-button"> Publier </button>
+    </div>
+  </form>
+</div>
+
+{% endblock %}

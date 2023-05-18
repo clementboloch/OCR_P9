@@ -46,3 +46,83 @@
         }
     }
 }
+
+.styled-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 75vw;
+    min-width: 500px;
+
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+
+    .form-title {
+        margin: 20px 0;
+        align-self: center;
+    }
+
+    form {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 20px;
+        margin: 20px 0 40px 0;
+        input, textarea {
+            width: 100%;
+        }
+        .label {
+            font-weight: 400;
+            margin-bottom: 5px;
+            font-size: 20px;
+        }
+        .button-container {
+            display: flex;
+            justify-content: flex-end;
+            .my-button {
+                width: 200px;
+            }
+        }
+        hr {
+            position: relative;
+            width: calc(100% + 40px);
+            left: -20px;
+            margin: 40px 0;
+        }
+    }    
+}
+
+.post {
+    position: relative;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    width: 100%;
+    margin-bottom: 20px;
+
+    .date {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+
+        font-size: 13px;
+    }
+
+    .user {
+        font-style: italic;
+    }
+
+    .description {
+        text-align: justify;
+    }
+
+    .post-button {
+        display: flex;
+        justify-content: flex-end;
+        .my-button {
+            display: block;
+            width: 100px;
+            margin: 0 0 0 10px;
+        }
+    }
+}
