@@ -1,5 +1,6 @@
 from itertools import chain
 
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.views import LoginView, LogoutView
@@ -30,6 +31,7 @@ class Logout(LogoutView):
 
 
 # Home view
+@login_required(login_url='/review/login/')
 def home(request):
     u = request.user
     u = models.CustomUser.objects.get(username='smithkaren')
@@ -44,6 +46,7 @@ def home(request):
 
 
 # Follow view
+@login_required(login_url='/review/login/')
 def follow(request):
     u = request.user
     u = models.CustomUser.objects.get(username='smithkaren')
@@ -71,6 +74,7 @@ def follow(request):
     return render(request, 'review/follow.html', context=follow)
 
 
+@login_required(login_url='/review/login/')
 def unfollow(request, unfollowed_user):
     u = request.user
     u = models.CustomUser.objects.get(username='smithkaren')
@@ -80,6 +84,7 @@ def unfollow(request, unfollowed_user):
 
 
 # Ticket creation view
+@login_required(login_url='/review/login/')
 def ticket(request):
     if request.method == "POST":
         form = forms.TicketForm(request.POST, request.FILES or None)
@@ -98,6 +103,7 @@ def ticket(request):
 
 
 # Review creation view
+@login_required(login_url='/review/login/')
 def review(request, ticket_id):
     # u = request.user
     u = models.CustomUser.objects.get(username='smithkaren')
@@ -145,6 +151,7 @@ def review(request, ticket_id):
 
 
 # Ticket modification view
+@login_required(login_url='/review/login/')
 def edit_ticket(request, ticket_id):
     ticket = models.Ticket.objects.get(id=ticket_id)
     if request.method == "POST":
@@ -165,6 +172,7 @@ def edit_ticket(request, ticket_id):
 
 
 # Review modification view
+@login_required(login_url='/review/login/')
 def edit_review(request, review_id):
     review = models.Review.objects.get(id=review_id)
     if request.method == "POST":
@@ -187,6 +195,7 @@ def edit_review(request, review_id):
 
 
 # Ticket deletion view
+@login_required(login_url='/review/login/')
 def delete_ticket(request, ticket_id):
     ticket = models.Ticket.objects.get(id=ticket_id)
     ticket.delete()
@@ -194,6 +203,7 @@ def delete_ticket(request, ticket_id):
 
 
 # Review deletion view
+@login_required(login_url='/review/login/')
 def delete_review(request, review_id):
     review = models.Review.objects.get(id=review_id)
     review.delete()
@@ -201,6 +211,7 @@ def delete_review(request, review_id):
 
 
 # My posts view
+@login_required(login_url='/review/login/')
 def posts(request):
     u = request.user
     u = models.CustomUser.objects.get(username='smithkaren')
