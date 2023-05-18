@@ -2,7 +2,7 @@ from itertools import chain
 
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import reverse_lazy
 from django.views import generic
 from django.db import IntegrityError
@@ -10,21 +10,26 @@ from . import models
 from . import forms
 
 
-# 1. Login view
+# Login view
 class Login(LoginView):
     form_class = AuthenticationForm
     success_url = reverse_lazy("home")
     template_name = "review/registration/login.html"
 
 
-# 2. Signup view
+# Signup view
 class SignUp(generic.CreateView):
     form_class = UserCreationForm
     success_url = reverse_lazy("login")
     template_name = "review/registration/signup.html"
 
 
-# 3. Home view
+# Logout view
+class Logout(LogoutView):
+    pass
+
+
+# Home view
 def home(request):
     u = request.user
     u = models.CustomUser.objects.get(username='smithkaren')
@@ -38,7 +43,7 @@ def home(request):
     return render(request, 'review/home.html', context={'posts': posts, 'answerable': True})
 
 
-# 4. Follow view
+# Follow view
 def follow(request):
     u = request.user
     u = models.CustomUser.objects.get(username='smithkaren')
@@ -74,7 +79,7 @@ def unfollow(request, unfollowed_user):
     return redirect('follow')
 
 
-# 5. Ticket creation view
+# Ticket creation view
 def ticket(request):
     if request.method == "POST":
         form = forms.TicketForm(request.POST, request.FILES or None)
@@ -92,7 +97,7 @@ def ticket(request):
     return render(request, "review/form.html", {"title": "Créer un ticket", "forms": [{'form': form}]})
 
 
-# 6. Review creation view
+# Review creation view
 def review(request, ticket_id):
     # u = request.user
     u = models.CustomUser.objects.get(username='smithkaren')
@@ -195,7 +200,7 @@ def delete_review(request, review_id):
     return redirect(posts)
 
 
-# 7. My posts view
+# My posts view
 def posts(request):
     u = request.user
     u = models.CustomUser.objects.get(username='smithkaren')
