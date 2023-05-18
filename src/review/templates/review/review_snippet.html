@@ -21,7 +21,7 @@
     {% endif %}
 
     {% if post.ticket %}
-    {% include 'review/ticket_snippet.html' with post=post.ticket answerable=False %}
+    {% include 'review/ticket_snippet.html' with post=post.ticket answerable=False editable=False %}
     {% endif %}
 
     {% if editable == True %}
