@@ -1,7 +1,7 @@
 {% extends 'review/feed.html' %}
 {% block buttons %}
 <div class="buttons">
-    <a class="btn btn-primary my-button" href="/review/ticket">Demander une critique</a>
-    <a class="btn btn-primary my-button" href="/review/review">Créer une critique</a>
+    <a class="btn btn-primary my-button" href="{% url 'ticket' %}">Demander une critique</a>
+    <a class="btn btn-primary my-button" href="{% url 'review' 0 %}">Créer une critique</a>
 </div>
 {% endblock %}

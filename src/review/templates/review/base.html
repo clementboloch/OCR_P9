@@ -21,11 +21,10 @@
         </div>
         {% if user.is_authenticated %}
         <div class="nav">
-            <a href="/review/home/">Home</a>
-            <a href="/review/ticket">Demander une critique</a>
-            <a href="/review/review/0">Créer une critique</a>
-            <a href="/review/posts">Voir mes posts</a>
-            <a href="/review/logout">Log out</a>
+            <a href="{% url 'home' %}">Flux</a>
+            <a href="{% url 'my_posts' %}">Posts</a>
+            <a href="{% url 'follow' %}">Abonnements</a>
+            <a href="{% url 'logout' %}">Se déconnecter</a>
         </div>
         {% endif %}
     </div>
