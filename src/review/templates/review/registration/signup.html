@@ -7,13 +7,23 @@
 <link type="text/x-scss" href="{% static 'style/review/signup.scss' %}" rel="stylesheet" media="screen">
 {% endcompress %}
 
-<h2>Inscrivez-vous</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">S'inscrire</button>
-  </form>
-
-<a href="{% url 'login' %}">Aller à page de login</a>
+<div class="content">
+  <h2>Inscrivez-vous</h2>
+  <div class="container">
+    <form method="post">
+      {% csrf_token %}
+      {% for field in form %}
+        <p>
+          <span class="label"> {{ field.label }} </span>
+          {{ field }}
+        </p>
+      {% endfor %}
+      <div class="post-button">
+        <a href="{% url 'login' %}" class="btn btn-secondary my-button">Retour</a>
+        <button type="submit" class="btn btn-primary my-button">S'inscrire</button>
+      </div>
+    </form>
+  </div>
+</div>
 
 {% endblock %}

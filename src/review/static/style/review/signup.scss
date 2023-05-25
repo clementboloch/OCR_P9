@@ -1,0 +1,39 @@
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
+
+    h2 {
+        margin: 20px 0;
+    }
+    .container {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 20px;
+        width: 400px;
+
+        margin :0 10px;
+        text-align: left;
+
+        .label {
+            font-weight: 400;
+            margin-bottom: 5px;
+            font-size: 20px;
+        }
+
+        input {
+            width: 100%;
+        }
+
+        .post-button {
+            display: flex;
+            justify-content: flex-end;
+            .my-button {
+                display: block;
+                width: 100px;
+                margin: 0 0 0 10px;
+            }
+        }
+    }
+}
