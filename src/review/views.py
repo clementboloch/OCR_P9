@@ -2,10 +2,10 @@ from itertools import chain
 
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import reverse_lazy
-from django.views import generic
 from django.db import IntegrityError
 from . import models
 from . import forms
@@ -19,10 +19,19 @@ class Login(LoginView):
 
 
 # Signup view
-class SignUp(generic.CreateView):
-    form_class = UserCreationForm
-    success_url = reverse_lazy("login")
-    template_name = "review/registration/signup.html"
+def signUp(request):
+    if request.method == 'POST':
+        form = forms.SignUpForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            user = authenticate(username=form.cleaned_data['username'],
+                                password=form.cleaned_data['password1'],
+                                )
+            login(request, user)
+            return redirect('home')
+    else:
+        form = forms.SignUpForm()
+    return render(request, 'review/registration/signup.html', {'form': form})
 
 
 # Logout view

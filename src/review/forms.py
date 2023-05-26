@@ -1,6 +1,13 @@
 
 from django import forms
-from .models import Ticket, Review
+from .models import Ticket, Review, CustomUser
+from django.contrib.auth.forms import UserCreationForm
+
+
+class SignUpForm(UserCreationForm):
+    class Meta:
+        model = CustomUser
+        fields = ['username', 'password1', 'password2']
 
 
 class TicketForm(forms.ModelForm):

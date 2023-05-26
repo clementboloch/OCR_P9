@@ -14,6 +14,7 @@
       {% csrf_token %}
       {% for field in form %}
         <p>
+          {{ field.errors }}
           <span class="label"> {{ field.label }} </span>
           {{ field }}
         </p>
