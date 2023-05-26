@@ -1,0 +1,50 @@
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    
+    h2 {
+        margin: 30px 0;
+    }
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 75vw;
+        margin-bottom: 40px;
+
+        form {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            input{
+                width: 83%;
+            }
+            button {
+                width: 15%;
+            }
+            input, button {
+                border-radius: 5px;
+                height: 35px;
+            }
+        }
+    }
+    .follow-user {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 20px;
+
+        margin: 0;
+        text-align: left;
+        width: 100%;
+
+        display: flex;
+        justify-content: space-between;
+
+        .user-name {
+            display: inline-flex;
+            align-items: center;
+        }
+    }
+}
