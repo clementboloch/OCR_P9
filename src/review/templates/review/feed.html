@@ -11,6 +11,7 @@
     {% block buttons %}
     {% endblock %}
     
+    {% if posts %}
     {% for post in posts %}
         {% if post.content_type == 'TICKET' %}
             {% include 'review/ticket_snippet.html' %}
@@ -18,6 +19,9 @@
             {% include 'review/review_snippet.html' %}
         {% endif %}
     {% endfor %}
+    {% else %}
+        <p>No posts yet.</p>
+    {% endif %}
 </div>
 
 {% endblock %}

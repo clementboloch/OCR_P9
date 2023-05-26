@@ -43,7 +43,6 @@ class Logout(LogoutView):
 @login_required(login_url='/review/login/')
 def home(request):
     u = request.user
-    u = models.CustomUser.objects.get(username='smithkaren')
     tickets = u.get_viewable_tickets()
     reviews = u.get_viewable_reviews()
     posts = sorted(
@@ -58,7 +57,6 @@ def home(request):
 @login_required(login_url='/review/login/')
 def follow(request):
     u = request.user
-    u = models.CustomUser.objects.get(username='smithkaren')
     error_message = ""
     if request.method == "POST":
         form = forms.FollowForm(request.POST)
@@ -86,7 +84,6 @@ def follow(request):
 @login_required(login_url='/review/login/')
 def unfollow(request, unfollowed_user):
     u = request.user
-    u = models.CustomUser.objects.get(username='smithkaren')
     unfollowed_user = get_object_or_404(models.CustomUser, id=unfollowed_user)
     models.UserFollow.objects.filter(user=u, followed_user=unfollowed_user).delete()
     return redirect('follow')
@@ -99,8 +96,7 @@ def ticket(request):
         form = forms.TicketForm(request.POST, request.FILES)
         if form.is_valid():
             my_ticket = form.save(commit=False)
-            # u = request.user
-            u = models.CustomUser.objects.get(username='smithkaren')
+            u = request.user
             my_ticket.user = u
             my_ticket.save()
             return redirect('home')
@@ -114,8 +110,7 @@ def ticket(request):
 # Review creation view
 @login_required(login_url='/review/login/')
 def review(request, ticket_id):
-    # u = request.user
-    u = models.CustomUser.objects.get(username='smithkaren')
+    u = request.user
     if request.method == "POST":
         ticketForm = {}
         reviewForm = {}
@@ -167,8 +162,7 @@ def edit_ticket(request, ticket_id):
         form = forms.TicketForm(request.POST, request.FILES or None, instance=ticket)
         if form.is_valid():
             my_ticket = form.save(commit=False)
-            # u = request.user
-            u = models.CustomUser.objects.get(username='smithkaren')
+            u = request.user
             my_ticket.user = u
             my_ticket.save()
         return redirect(posts)
@@ -188,8 +182,7 @@ def edit_review(request, review_id):
         form = forms.ReviewForm(request.POST, instance=review)
         if form.is_valid():
             my_review = form.save(commit=False)
-            # u = request.user
-            u = models.CustomUser.objects.get(username='smithkaren')
+            u = request.user
             my_review.user = u
             my_review.save()
         return redirect(posts)
@@ -223,7 +216,6 @@ def delete_review(request, review_id):
 @login_required(login_url='/review/login/')
 def posts(request):
     u = request.user
-    u = models.CustomUser.objects.get(username='smithkaren')
     tickets = u.get_my_tickets()
     reviews = u.get_my_reviews()
     posts = sorted(
