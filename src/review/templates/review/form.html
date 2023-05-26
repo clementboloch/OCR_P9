@@ -3,7 +3,7 @@
 
 <div class="styled-form">
   <h2 class="form-title"> {{ title }} </h2>
-  <form method="post">
+  <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     {% for formDict in forms %}
       {% if formDict.ticket %}
@@ -24,7 +24,7 @@
     {% endfor %}
     
     <div class="button-container">
-      <button type="submit" class="btn btn-primary my-button"> Publier </button>
+      <button type="POST" enctype="multipart/form-data" class="btn btn-primary my-button"> Publier </button>
     </div>
   </form>
 </div>

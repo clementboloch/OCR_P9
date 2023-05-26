@@ -125,6 +125,11 @@ body {
         text-align: justify;
     }
 
+    .image {
+        max-height: 300px;
+        margin-bottom: 20px;
+    }
+
     .post-button {
         display: flex;
         justify-content: flex-end;

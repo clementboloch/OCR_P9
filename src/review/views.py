@@ -96,7 +96,7 @@ def unfollow(request, unfollowed_user):
 @login_required(login_url='/review/login/')
 def ticket(request):
     if request.method == "POST":
-        form = forms.TicketForm(request.POST, request.FILES or None)
+        form = forms.TicketForm(request.POST, request.FILES)
         if form.is_valid():
             my_ticket = form.save(commit=False)
             # u = request.user

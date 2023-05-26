@@ -10,10 +10,7 @@
         {{ post.description }}
     </p>
     {% if post.image %}
-    <h3> Image </h3>
-    <p class="body">
-        {{ post.image }}
-    </p>
+    <img src="{{ post.image.url }}" alt="Image du ticket" class="image">
     {% endif %}
 
     {% if editable == True %}
