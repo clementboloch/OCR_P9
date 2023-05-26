@@ -1,7 +1,7 @@
 from itertools import chain
 
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.views import LoginView, LogoutView
@@ -65,7 +65,7 @@ def follow(request):
         if form.is_valid():
             my_follow = form.cleaned_data['user']
             try:
-                my_follow = models.CustomUser.objects.get(username=my_follow)
+                my_follow = get_object_or_404(models.CustomUser, username=my_follow)
             except models.CustomUser.DoesNotExist:
                 my_follow = None
             if my_follow is not None:
@@ -87,7 +87,7 @@ def follow(request):
 def unfollow(request, unfollowed_user):
     u = request.user
     u = models.CustomUser.objects.get(username='smithkaren')
-    unfollowed_user = models.CustomUser.objects.get(id=unfollowed_user)
+    unfollowed_user = get_object_or_404(models.CustomUser, id=unfollowed_user)
     models.UserFollow.objects.filter(user=u, followed_user=unfollowed_user).delete()
     return redirect('follow')
 
@@ -134,7 +134,7 @@ def review(request, ticket_id):
                 # TODO: add an error message somewhere
                 return redirect('review', ticket_id)
         else:
-            my_ticket = models.Ticket.objects.get(id=ticket_id)
+            my_ticket = get_object_or_404(models.Ticket, id=ticket_id)
         reviewForm = forms.ReviewForm(reviewForm)
         if reviewForm.is_valid():
             my_review = reviewForm.save(commit=False)
@@ -145,7 +145,7 @@ def review(request, ticket_id):
 
     else:
         if ticket_id != 0:
-            ticket = models.Ticket.objects.get(id=ticket_id)
+            ticket = get_object_or_404(models.Ticket, id=ticket_id)
             ticketForm = None
         else:
             ticket = None
@@ -162,7 +162,7 @@ def review(request, ticket_id):
 # Ticket modification view
 @login_required(login_url='/review/login/')
 def edit_ticket(request, ticket_id):
-    ticket = models.Ticket.objects.get(id=ticket_id)
+    ticket = get_object_or_404(models.Ticket, id=ticket_id)
     if request.method == "POST":
         form = forms.TicketForm(request.POST, request.FILES or None, instance=ticket)
         if form.is_valid():
@@ -183,7 +183,7 @@ def edit_ticket(request, ticket_id):
 # Review modification view
 @login_required(login_url='/review/login/')
 def edit_review(request, review_id):
-    review = models.Review.objects.get(id=review_id)
+    review = get_object_or_404(models.Review, id=review_id)
     if request.method == "POST":
         form = forms.ReviewForm(request.POST, instance=review)
         if form.is_valid():
@@ -206,7 +206,7 @@ def edit_review(request, review_id):
 # Ticket deletion view
 @login_required(login_url='/review/login/')
 def delete_ticket(request, ticket_id):
-    ticket = models.Ticket.objects.get(id=ticket_id)
+    ticket = get_object_or_404(models.Ticket, id=ticket_id)
     ticket.delete()
     return redirect(posts)
 
@@ -214,7 +214,7 @@ def delete_ticket(request, ticket_id):
 # Review deletion view
 @login_required(login_url='/review/login/')
 def delete_review(request, review_id):
-    review = models.Review.objects.get(id=review_id)
+    review = get_object_or_404(models.Review, id=review_id)
     review.delete()
     return redirect(posts)
 
