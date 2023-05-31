@@ -21,7 +21,7 @@ class Command(BaseCommand):
         # create fake tickets
         for i in range(10):
             title = fake.sentence(nb_words=6, variable_nb_words=True)
-            description = fake.text(max_nb_chars=2048)
+            description = fake.text(max_nb_chars=1048)
             user = CustomUser.objects.order_by('?').first()
 
             Ticket.objects.create(title=title, description=description, user=user)
@@ -34,7 +34,7 @@ class Command(BaseCommand):
                 ticket = Ticket.objects.order_by('?').first()
             rating = fake.random_int(min=0, max=5)
             headline = fake.sentence(nb_words=3, variable_nb_words=True)
-            body = fake.text(max_nb_chars=8192)
+            body = fake.text(max_nb_chars=2000)
             user = CustomUser.objects.order_by('?').first()
 
             Review.objects.create(ticket=ticket, rating=rating, headline=headline, body=body, user=user)
