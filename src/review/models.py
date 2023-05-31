@@ -36,6 +36,10 @@ class Ticket(models.Model):
     image = models.ImageField(upload_to="review/", null=True, blank=True)
     time_created = models.DateTimeField(auto_now_add=True)
 
+    @property
+    def answered(self):
+        return Review.objects.filter(ticket=self).exists()
+
 
 class Review(models.Model):
     ticket = models.ForeignKey(to=Ticket, on_delete=models.CASCADE, null=True, blank=True)

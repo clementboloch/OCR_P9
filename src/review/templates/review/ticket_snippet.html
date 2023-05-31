@@ -19,7 +19,7 @@
         <a class="btn btn-danger my-button" href="{% url 'delete_ticket' post.id %}">Supprimer</a>
     </div>
     {% endif %}
-    {%  if answerable == True %}
+    {%  if answerable == True and not post.answered == True %}
     <div class="answer-button">
         <a class="btn btn-primary my-button" href="{% url 'review' post.id %}">Créer une critique</a>
     </div>
