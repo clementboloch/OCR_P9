@@ -158,6 +158,9 @@ def review(request, ticket_id):
 @login_required(login_url='/review/login/')
 def edit_ticket(request, ticket_id):
     ticket = get_object_or_404(models.Ticket, id=ticket_id)
+    isMyPost = ticket.user == request.user
+    if not isMyPost:
+        return redirect('home')
     if request.method == "POST":
         form = forms.TicketForm(request.POST, request.FILES or None, instance=ticket)
         if form.is_valid():
@@ -178,6 +181,9 @@ def edit_ticket(request, ticket_id):
 @login_required(login_url='/review/login/')
 def edit_review(request, review_id):
     review = get_object_or_404(models.Review, id=review_id)
+    isMyPost = review.user == request.user
+    if not isMyPost:
+        return redirect('home')
     if request.method == "POST":
         form = forms.ReviewForm(request.POST, instance=review)
         if form.is_valid():
@@ -200,6 +206,9 @@ def edit_review(request, review_id):
 @login_required(login_url='/review/login/')
 def delete_ticket(request, ticket_id):
     ticket = get_object_or_404(models.Ticket, id=ticket_id)
+    isMyPost = ticket.user == request.user
+    if not isMyPost:
+        return redirect('home')
     ticket.delete()
     return redirect(posts)
 
@@ -208,6 +217,9 @@ def delete_ticket(request, ticket_id):
 @login_required(login_url='/review/login/')
 def delete_review(request, review_id):
     review = get_object_or_404(models.Review, id=review_id)
+    isMyPost = review.user == request.user
+    if not isMyPost:
+        return redirect('home')
     review.delete()
     return redirect(posts)
 
